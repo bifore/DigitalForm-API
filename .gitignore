@@ -2,5 +2,4 @@
 /core/__pycache__
 /core/wsgi.py
 /client/__pycache__
-/client/migrations
 /.env

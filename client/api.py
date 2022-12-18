@@ -5,7 +5,11 @@ from decouple import config # store env variables in .env or ini
 from .schema import DigitalFormOut, DigitalFormIn, Message # schema
 from .models import ClientInfo as client # data models
 from asgiref.sync import sync_to_async # async support for sync function
+
 from django.core.serializers import serialize # serialize queryset to json
+from django.http import HttpResponse
+import orjson
+
 
 # router instance
 router = Router()
@@ -53,7 +57,9 @@ async def get_data(request):
     try:
         data = await client.objects.async_all()
         res = serialize('json', data)
-        return res
+        obj = orjson.loads(res)
+        return HttpResponse(orjson.dumps(obj))
+        
     except Exception as e:
         print(e)
 
