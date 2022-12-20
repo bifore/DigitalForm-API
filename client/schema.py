@@ -21,3 +21,6 @@ class DigitalFormOut(Schema):
     client_name: str 
     website_link: str
     message: str = 'success'
+
+class ClientData(Schema):
+    client_name: str

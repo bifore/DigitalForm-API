@@ -1,8 +1,6 @@
 from ninja import Router # import router module from ninja
-# import asyncpg # asynchronous driver for postgres
-# from .query import execute 
-from decouple import config # store env variables in .env or ini
-from .schema import DigitalFormOut, DigitalFormIn, Message # schema
+from .query import execute # execute function to create db structure
+from .schema import DigitalFormOut, DigitalFormIn, Message, ClientData # schema
 from .models import ClientInfo as client # data models
 from asgiref.sync import sync_to_async # async support for sync function
 
@@ -51,7 +49,7 @@ async def save_data(request, clientData: DigitalFormIn):
 
 
 # get api
-@router.get("/clientData")
+@router.get("/clientData", response={404: Message})
 async def get_data(request):
     
     try:
@@ -62,19 +60,16 @@ async def get_data(request):
         
     except Exception as e:
         print(e)
-
+        return 404, {'message': 'no client data available'}
 
 # query api
-@router.get("/pg")
-async def run(request):
+@router.post("/createDB", response={200: Message, 408: Message})
+async def run(request, client: ClientData):
 
     try:
-        conn = await asyncpg.connect(user=config('USER'), password=config('PASSWORD'),
-                                     database=config('DATABASE'), host=config('HOST'))
-        
-        await execute(conn)
-        await conn.close()
-        print("done")
+        await execute(client)
+        return 200, {'message': 'db structure created for new client'}
 
     except Exception as e:
         print(e)
+        return 408, {'message': 'request failed'}
