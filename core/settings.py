@@ -65,7 +65,7 @@ CORS_ALLOW_METHODS = [
 # CACHES = {
 #     "default": {
 #         "BACKEND": "django_redis.cache.RedisCache",
-#         "LOCATION": "redis://default:F1JxxIo1cGPWlc7dOAxg@containers-us-west-131.railway.app:5739",
+#         "LOCATION": "{uri}",
 #         "OPTIONS": {
 #             "CLIENT_CLASS": "django_redis.client.DefaultClient",
 #         }
