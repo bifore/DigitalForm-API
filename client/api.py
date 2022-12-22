@@ -8,6 +8,10 @@ from django.core.serializers import serialize # serialize queryset to json
 from django.http import HttpResponse
 import orjson
 
+# catch settings
+# from django.conf import settings
+# from django.core.cache.backends.base import DEFAULT_TIMEOUT
+# from django.core.cache import cache
 
 # router instance
 router = Router()
@@ -52,7 +56,7 @@ async def save_data(request, clientData: DigitalFormIn):
 @router.get("/clientData", response={404: Message})
 async def get_data(request):
     
-    try:
+    try:    
         data = await client.objects.async_all()
         res = serialize('json', data)
         obj = orjson.loads(res)
@@ -61,6 +65,7 @@ async def get_data(request):
     except Exception as e:
         print(e)
         return 404, {'message': 'no client data available'}
+
 
 # query api
 @router.post("/createDB", response={200: Message, 408: Message})

@@ -61,6 +61,19 @@ CORS_ALLOW_METHODS = [
     "POST",
 ]
 
+# Redis Catch
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": "redis://default:F1JxxIo1cGPWlc7dOAxg@containers-us-west-131.railway.app:5739",
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#         }
+#     }
+# }
+
+# CACHE_TTL = 60 * 15
+
 # TEMPLATES = [
 #     {
 #         'BACKEND': 'django.template.backends.django.DjangoTemplates',
